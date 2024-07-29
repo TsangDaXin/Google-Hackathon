@@ -11,3 +11,5 @@ SOLUTIONS:
   Develop a simple and user-friendly interface for employees to submit leave requests. 
   Design automated workflows for leave approvals to minimize manual intervention.
   Implement notifications and reminders for managers and employees about pending requests and approvals.
+
+Appscript link: https://script.google.com/u/0/home/projects/1pow5sT2_7Uei-FhpMtTjP0730Xf3x6IE5MQLIayjhzQ6CnexLiY1wD69/edit
