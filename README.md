@@ -13,4 +13,3 @@ SOLUTIONS:
   Implement notifications and reminders for managers and employees about pending requests and approvals.
 
 Appscript link: https://script.google.com/u/0/home/projects/1pow5sT2_7Uei-FhpMtTjP0730Xf3x6IE5MQLIayjhzQ6CnexLiY1wD69/edit
-![Uploading image.png…]()
