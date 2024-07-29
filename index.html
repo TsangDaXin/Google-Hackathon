@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <script>
+    function AddRow() {
+      var usernamee = document.getElementById("usernamee").value;
+      var passwordd = document.getElementById("passwordd").value;
+      var email = document.getElementById("email").value;
+      var phone = document.getElementById("phone").value;
+      if (usernamee == "" || passwordd == "" || email == "" || phone == "") {
+        return false;
+      } else {
+        google.script.run.AddRecord(usernamee, passwordd, email, phone);
+        document.getElementById("page2_id1").classList.add("hidden");
+        document.getElementById("page3_id1").classList.remove("hidden");
+      }
+    }
+
+    function LoginUser() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+      google.script.run.withSuccessHandler(function(output) {
+        if (output) {
+          google.script.run.withSuccessHandler(function(html) {
+            document.open();
+            document.write(html);
+            document.close();
+          }).getDashboard(username);  // Pass the username here
+        } else {
+          document.getElementById("errorMessage").innerHTML = "Invalid data";
+        }
+      }).checkLogin(username, password);
+    }
+
+    // function LoginUser() {
+    //   var username = document.getElementById("username").value;
+    //   var password = document.getElementById("password").value;
+    //   google.script.run.withSuccessHandler(function(output) {
+    //     if (output) {
+    //       google.script.run.withSuccessHandler(function(html) {
+    //         document.open();
+    //         document.write(html);
+    //         document.close();
+    //       }).getDashboard();
+    //     } else {
+    //       document.getElementById("errorMessage").innerHTML = "Invalid data";
+    //     }
+    //   }).checkLogin(username, password);
+    // }
+
+    function showCreateAccount() {
+      document.getElementById("page1_id1").classList.add("hidden");
+      document.getElementById("page2_id1").classList.remove("hidden");
+    }
+
+    function showLogin() {
+      document.getElementById("page3_id1").classList.add("hidden");
+      document.getElementById("page1_id1").classList.remove("hidden");
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    h1, h2 {
+      margin: 0 0 20px;
+      color: #333;
+    }
+
+    input[type=text], input[type=password], input[type=number], input[type=email] {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+      text-align: center;
+    }
+
+    input[type=submit], input[type=button] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    input[type=submit]:hover, input[type=button]:hover {
+      background-color: #45a049;
+    }
+
+    .error-message {
+      color: red;
+    }
+
+    .user {
+      display: inline-block;
+      width: 75px;
+      height: 75px;
+      border: 8px solid black;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+    }
+
+    .user::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background: black;
+      border-radius: 50%;
+      position: absolute;
+      left: calc(50% - 12px);
+      top: 10px;
+    }
+
+    .user::after {
+      content: '';
+      display: inline-block;
+      width: 50px;
+      height: 40px;
+      background: black;
+      border-radius: 50%;
+      position: absolute;
+      left: calc(50% - 25px);
+      top: 35px;
+    }
+
+    .message {
+      color: red;
+      font-size: 0.9em;
+      margin-top: 10px;
+    }
+
+    .success-message {
+      font-size: 1em;
+      color: black;
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="container" id="page1_id1">
+    <h1>Login Form</h1>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <div id="errorMessage" class="error-message"></div>
+    <input type="submit" value="Login" onclick="LoginUser()" />
+    <div>
+      <b>If you don't have an account,</b>
+      <input type="button" onClick="showCreateAccount()" value="Create New" />
+    </div>
+  </div>
+
+  <div class="container hidden" id="page2_id1">
+    <h1>Create Account</h1>
+    <input type="text" id="usernamee" placeholder="Name" />
+    <input type="password" id="passwordd" placeholder="Create password" />
+    <input type="email" id="email" placeholder="Email" />
+    <input type="number" id="phone" placeholder="Phone no." />
+    <div class="message">Password must contain letters and numbers.</div>
+    <input type="submit" value="Create" onclick="AddRow()" />
+  </div>
+
+  <div class="container hidden" id="page3_id1">
+    <h2>Your account has been successfully created. Login to your account</h2>
+    <input type="button" onClick="showLogin()" value="Login" />
+  </div>
+
+  <div class="container hidden" id="page4_id1">
+    <h2>Hi <b id="displayusername" style="color:red;"></b>!</h2>
+    <div class="user"></div>
+    <h2>You are successfully logged in.</h2>
+    <h2>**************</h2>
+  </div>
+</body>
+</html>
